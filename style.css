@@ -1,33 +1,126 @@
+/* --- Base --- */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    background: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
 }
 
+:root {
+    --blue: #00aaff;
+    --purple: #c400ff;
+    --green: #00ff9d;
+
+    --theme: var(--blue);
+
+    --bg: #0c0f17;
+    --text: #ffffff;
+}
+
+.light-mode {
+    --bg: #e8e8e8;
+    --text: #111;
+}
+
+/* --- Neon Glow --- */
+.glow {
+    box-shadow: 0 0 15px var(--theme);
+}
+
+/* --- Glassmorphism --- */
+.glass {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    animation: fadeIn 1.2s;
+}
+
+/* --- Header --- */
 header {
-    background: #0078ff;
-    color: white;
-    padding: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
 }
 
-#searchBox {
-    padding: 10px;
-    width: 80%;
-    margin-top: 10px;
-    border-radius: 5px;
+.logo {
+    font-size: 28px;
+    color: var(--theme);
+    text-shadow: 0 0 10px var(--theme);
+}
+
+.controls select,
+#modeToggle {
+    padding: 8px 12px;
+    border-radius: 10px;
     border: none;
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
 }
 
-.category {
-    background: white;
-    margin: 15px;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* --- Hero Section --- */
+.hero {
+    text-align: center;
+    margin: 40px 20px;
 }
 
-.service {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+.hero h2 {
+    font-size: 45px;
+    text-shadow: 0 0 10px var(--theme);
 }
+
+.neon-btn {
+    margin-top: 15px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: 2px solid var(--theme);
+    background: transparent;
+    color: var(--theme);
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.neon-btn:hover {
+    background: var(--theme);
+    color: black;
+    box-shadow: 0 0 20px var(--theme);
+}
+
+/* --- Cards --- */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px;
+}
+
+.card {
+    width: 250px;
+    text-align: center;
+    padding: 30px;
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px var(--theme);
+}
+
+/* --- Animation --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
