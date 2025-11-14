@@ -1,43 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local Services Directory</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Services Directory</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+<header>
+<h1>Local Services Directory</h1>
+<select id="categorySelect" onchange="loadCategory()">
+<option value="">Select a Category</option>
+<option value="plumbing">Plumbing</option>
+<option value="electricals">Electricals</option>
+<option value="bakerys">Bakerys</option>
+<option value="petrolpumps">Petrol Pumps</option>
+<option value="temples">Temples</option>
+<option value="schools">Schools</option>
+<option value="stationary">Stationary Stores</option>
+</select>
+</header>
 
-    <header>
-        <h1>Local Services Directory</h1>
 
-        <div class="theme-buttons">
-            <button onclick="changeTheme('dark')">Dark</button>
-            <button onclick="changeTheme('purple')">Purple</button>
-        </div>
-    </header>
+<section id="serviceList" class="card-container"></section>
 
-    <section class="search-section">
-        <input type="text" id="searchBox" placeholder="Search services..." onkeyup="searchItems()">
-    </section>
 
-    <section class="categories">
-        <button onclick="loadCategory('plumbing')">Plumbing</button>
-        <button onclick="loadCategory('electricals')">Electricals</button>
-        <button onclick="loadCategory('bakeries')">Bakeries</button>
-        <button onclick="loadCategory('petrolpumps')">Petrol Pumps</button>
-        <button onclick="loadCategory('temples')">Temples</button>
-        <button onclick="loadCategory('schools')">Schools</button>
-        <button onclick="loadCategory('stationery')">Stationary Stores</button>
-    </section>
-
-    <section id="serviceList" class="service-list">
-        <p class="placeholder">Select a category to view services.</p>
-    </section>
-
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
-
