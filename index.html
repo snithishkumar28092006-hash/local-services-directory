@@ -1,229 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Local Directory</title>
-
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #12001f;
-        color: white;
-    }
-
-    .container {
-        display: flex;
-        height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-        width: 260px;
-        background: #220033;
-        padding: 20px;
-        overflow-y: auto;
-        border-right: 2px solid #3a0057;
-    }
-
-    .sidebar h2 {
-        text-align: center;
-        color: #d896ff;
-    }
-
-    .category {
-        padding: 12px;
-        background: #32004d;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .category:hover {
-        background: #5e0096;
-    }
-
-    /* Main Content */
-    .main {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-    }
-
-    .search-box input {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        background: #2d0047;
-        color: white;
-    }
-
-    .item-card {
-        background: #2d0047;
-        padding: 15px;
-        border-radius: 12px;
-        margin: 10px 0;
-        border: 1px solid #5e0096;
-    }
-
-    .item-card:hover {
-        background: #43006b;
-    }
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Services Directory</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
+    <header>
+        <h1>Local Services Directory</h1>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>Categories</h2>
-        <div class="category" onclick="loadCategory('plumbing')">Plumbing</div>
-        <div class="category" onclick="loadCategory('electricals')">Electricals</div>
-        <div class="category" onclick="loadCategory('bakeries')">Bakeries</div>
-        <div class="category" onclick="loadCategory('petrol')">Petrol Pumps</div>
-        <div class="category" onclick="loadCategory('temples')">Temples</div>
-        <div class="category" onclick="loadCategory('schools')">Schools</div>
-        <div class="category" onclick="loadCategory('stationery')">Stationery Stores</div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main">
-        <h2 id="title">Select a Category</h2>
-
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search..." onkeyup="searchItems()">
+        <div class="theme-buttons">
+            <button onclick="changeTheme('dark')">Dark</button>
+            <button onclick="changeTheme('purple')">Purple</button>
         </div>
+    </header>
 
-        <div id="items"></div>
-    </div>
+    <section class="search-section">
+        <input type="text" id="searchBox" placeholder="Search services..." onkeyup="searchItems()">
+    </section>
 
-</div>
+    <section class="categories">
+        <button onclick="loadCategory('plumbing')">Plumbing</button>
+        <button onclick="loadCategory('electricals')">Electricals</button>
+        <button onclick="loadCategory('bakeries')">Bakeries</button>
+        <button onclick="loadCategory('petrolpumps')">Petrol Pumps</button>
+        <button onclick="loadCategory('temples')">Temples</button>
+        <button onclick="loadCategory('schools')">Schools</button>
+        <button onclick="loadCategory('stationery')">Stationary Stores</button>
+    </section>
 
+    <section id="serviceList" class="service-list">
+        <p class="placeholder">Select a category to view services.</p>
+    </section>
 
-<script>
-const data = {
-    plumbing: [
-        "Royal Plumbing Works", "Perfect Pipe Fittings", "A1 Plumbing Mart",
-        "Metro Plumbing Services", "HydroFix Plumbing", "AquaLine Repairs",
-        "BlueDrop Plumbers", "LeakStop Solutions", "PipeMaster Agency",
-        "FlowRight Plumbing", "WaterPro Experts", "Sanjay Plumbing Store",
-        "UltraFix Plumbers", "Prime Pipeline Services", "RapidFix Plumbing",
-        "Modern Pipe House", "AquaTech Works", "CityLine Plumbers",
-        "PipePoint Traders", "SuperFlow Repairs", "Star Plumbing Agency",
-        "SilverPipe Works", "CleanFlow Fixers", "PipeForce Services",
-        "WaterMax Plumbing", "PipeZone Store", "TurboFlow Repairs",
-        "Reliable Plumbing Hub", "TrueFix Pipes", "PlumbCare Solutions",
-        "Rainbow Plumbing", "ProLine Plumbers", "QuickPipe Repairs",
-        "AquaServ Services", "DeepFlow Plumbing", "RoyalLine Pipes",
-        "SwiftFix Plumbing", "PipeWorld Traders", "MetroLine Services",
-        "GoldenTap Plumbing", "RapidDrop Works", "Omega Pipe House",
-        "PrimeFix Plumbing", "LineMaster Repairs", "WaterPlus Plumbers",
-        "LeakLess Solutions", "TopLine Plumbing"
-    ],
-
-    electricals: [
-        "City Electricals", "Spark Power House", "VoltFix Electricals",
-        "PowerPro Agencies", "Star Light Electricals", "GlowTech Traders",
-        "MegaVolt Store", "BrightPower Solutions", "ElectroFix Works",
-        "PowerWave Services", "LightMax Traders", "ShineStar Electricals",
-        "Royal Electric House", "CityGlow Store", "HiVolt Electric Mart",
-        "ChargeUp Electricals", "SparkLight Works", "Modern Electric Zone",
-        "PrimePower Traders", "Electra World", "MetroVolt Electricals",
-        "ProLight Power", "TrueVolt Services", "RapidShock Repairs",
-        "StarBeam Electricals", "PowerLine Fixers", "GlowHub Store",
-        "ElectroWave Mart", "SilverSpark Power", "BrightLine Electricals",
-        "UltraVolt Services", "Fusion Electric House", "ThunderFix Works",
-        "LightWorld Traders", "SkyVolt Electricals", "HighBeam Power",
-        "OmegaGlow Traders", "ElectroMaster Shop", "SunVolt Electricals"
-    ],
-
-    bakeries: [
-        "SweetTreat Bakery", "GoldenCrust Bakes", "CakeLand Bakers",
-        "FreshBake House", "Royal Oven", "SoftBite Bakery",
-        "CreamyCakes Center", "BakeWorld", "BreadHeaven",
-        "SugarBerry Bakers", "DreamCakes", "DailyBread Store",
-        "HappyBites Bakery", "ChocolateCrust House", "SweetOven Bakery",
-        "BlueBerry Cakes", "FreshLoaf Store", "ButterMelt Bakery",
-        "CakeSpot", "YummyCrust Bakes", "FreshBite House",
-        "CreamBell Bakers", "MagicBake", "BreadBox Store",
-        "BakeMagic House", "OvenKing Bakers", "CakeCorner",
-        "SoftLoaf Bakery", "RoyalPastry House", "DailyCake Store"
-    ],
-
-    petrol: [
-        "Indian Oil Petrol Pump", "HP Petrol Pump", "BPCL Fuel Station",
-        "Essar Petrol Pump", "Reliance Petrol Station", "Shell Fuel Center",
-        "EcoFuel Pump", "CityFuel Station", "Metro Petroleum",
-        "Highway Fuel Plaza", "RoyalFuel Point", "SafeRide Petrol Pump",
-        "QuickFill Station", "TurboFuel Outlet", "FreshFuel Center",
-        "Prime Petrol Pump", "UltraFuel Services", "AutoLine Fuel Station"
-    ],
-
-    temples: [
-        "Ganesha Temple", "Murugan Temple", "Shiva Temple",
-        "Amman Kovil", "Ranganathar Temple", "Vishnu Temple",
-        "Hanuman Temple", "Ayyappa Swamy Temple", "Kaliamman Temple",
-        "Perumal Temple", "Vinayagar Kovil", "Marriamman Temple",
-        "Sri Krishna Temple", "Lakshmi Narayana Temple",
-        "Balamurugan Temple", "Sai Baba Temple", "Navagraha Temple",
-        "Iskcon Temple", "Sivan Koil", "Karuppasamy Temple"
-    ],
-
-    schools: [
-        "Govt Higher Secondary School", "Vivekananda Matric School",
-        "Kendriya Vidyalaya", "Bharathi Vidyalaya", "GreenField School",
-        "St. Joseph School", "Modern Senior Secondary School",
-        "National Public School", "Oxford English School",
-        "Sunrise Academy", "City Central School",
-        "Royal International School", "Little Flower School",
-        "Holy Angels School", "Rainbow Matric School",
-        "Saraswathi Vidyalaya", "St. Xavier School",
-        "Global Wisdom School", "NewLife Educational Institute"
-    ],
-
-    stationery: [
-        "City Stationery Store", "Royal Pen House", "PaperWorld",
-        "Notebook Center", "OfficeSupplies Hub", "Kids Stationery Mart",
-        "PrimeBooks Store", "Classic Pen Shop", "StudyLine Traders",
-        "SmartNote Store", "EduBox House", "Metro Stationery",
-        "PencilPoint Shop", "SharpWrite Store", "PaperCart",
-        "BookMaster Traders", "SchoolNeeds Center", "WriteWell Store"
-    ]
-};
-
-
-function loadCategory(category) {
-    const itemsDiv = document.getElementById("items");
-    const title = document.getElementById("title");
-    const search = document.getElementById("search");
-
-    search.value = ""; // reset search
-    title.innerText = category.toUpperCase();
-
-    itemsDiv.innerHTML = "";
-
-    data[category].forEach(item => {
-        itemsDiv.innerHTML += `<div class='item-card'>${item}</div>`;
-    });
-}
-
-function searchItems() {
-    let value = document.getElementById("search").value.toLowerCase();
-    let cards = document.querySelectorAll(".item-card");
-
-    cards.forEach(card => {
-        card.style.display = card.innerText.toLowerCase().includes(value)
-            ? "block" : "none";
-    });
-}
-</script>
+    <script src="script.js"></script>
 
 </body>
 </html>
+
