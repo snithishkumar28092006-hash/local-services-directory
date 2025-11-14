@@ -1,51 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Neon Glass Website</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Local Services Directory</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <header>
-        <h1 class="logo">NeonSite</h1>
+  <header class="site-header glass">
+    <div class="left">
+      <h1 class="logo">ServiceSpot</h1>
+      <p class="tag">Find trusted local helpers near you</p>
+    </div>
 
-        <div class="controls">
-            <select id="themeSelector">
-                <option value="blue">Blue Theme</option>
-                <option value="purple">Purple Theme</option>
-                <option value="green">Green Theme</option>
-            </select>
+    <div class="right controls">
+      <div class="theme-controls">
+        <select id="themeSelector" aria-label="Choose theme">
+          <option value="light">Light</option>
+          <option value="dark" selected>Dark</option>
+          <option value="purple">Purple</option>
+          <option value="green">Green</option>
+        </select>
 
-            <button id="modeToggle">🌙</button>
-        </div>
-    </header>
+        <button id="modeToggle" title="Toggle light / dark">🌙</button>
+      </div>
+    </div>
+  </header>
 
+  <main>
     <section class="hero glass">
-        <h2>Futuristic Neon Glass UI</h2>
-        <p>Beautiful • Responsive • Animated</p>
-        <button class="neon-btn">Explore More</button>
+      <div class="hero-inner">
+        <h2>Local Services — Fast. Trusted. Near you.</h2>
+        <p>Search electricians, plumbers, tutors, mechanics and more. Tap to call.</p>
+
+        <div class="search-row">
+          <input id="searchBox" type="search" placeholder="Search by service, name or location (e.g. plumber, Kumar, Chennai)" />
+          <button id="clearSearch" title="Clear search">✕</button>
+        </div>
+
+        <div class="quick-links">
+          <a class="neon-btn" id="addListing" href="#" target="_blank">Add a Listing</a>
+          <a class="neon-btn ghost" id="viewAll" href="#directory">View Directory</a>
+        </div>
+      </div>
     </section>
 
-    <section class="cards">
-        <div class="card glass">
-            <h3>Speed</h3>
-            <p>Lightning fast UI animations.</p>
-        </div>
-
-        <div class="card glass">
-            <h3>Glow</h3>
-            <p>Neon glowing buttons & borders.</p>
-        </div>
-
-        <div class="card glass">
-            <h3>Modern</h3>
-            <p>Glassmorphism + gradient lighting.</p>
-        </div>
+    <section id="directory" class="directory">
+      <div id="categoryContainer" class="category-container"></div>
     </section>
+  </main>
 
-    <script src="script.js"></script>
+  <footer class="site-footer glass">
+    <div>© <span id="year"></span> ServiceSpot • Built with ❤️</div>
+    <div class="footer-links">Theme saved in local storage • Works offline (static)</div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
