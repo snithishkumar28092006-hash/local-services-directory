@@ -1,160 +1,95 @@
-/* =========================
-   Sample data - replace/add your real listings here
-   ========================= */
-const data = [
-  {
-    category: "Plumbers",
-    services: [
-      { name: "Kumar Plumbing Service", phone: "+919876543210", location: "Anna Nagar", notes: "Home & commercial" },
-      { name: "WaterFix Plumbers", phone: "+919988776655", location: "Velachery", notes: "Leak & pipe replacement" }
-    ]
-  },
-  {
-    category: "Electricians",
-    services: [
-      { name: "Hari Electricals", phone: "+919090909090", location: "T. Nagar", notes: "Wiring, stabilizers" },
-      { name: "SparkFix Electricians", phone: "+918888888888", location: "Adyar", notes: "AC & appliances" }
-    ]
-  },
-  {
-    category: "Tutors",
-    services: [
-      { name: "Sai Maths Tutor", phone: "+919700000001", location: "Online / OMR", notes: "11-12 / JEE basics" },
-      { name: "Priya Home Tutor", phone: "+919700000002", location: "Local", notes: "Primary & middle" }
-    ]
-  }
-];
-
-/* =========================
-   DOM references
-   ========================= */
-const categoryContainer = document.getElementById("categoryContainer");
-const searchBox = document.getElementById("searchBox");
-const clearSearch = document.getElementById("clearSearch");
-const addListing = document.getElementById("addListing");
-const yearEl = document.getElementById("year");
-
-/* =========================
-   Utility: render categories
-   ========================= */
-function renderCategories(filter = "") {
-  const q = filter.trim().toLowerCase();
-  categoryContainer.innerHTML = "";
-
-  data.forEach(cat => {
-    // Filter services within the category
-    const matchedServices = cat.services.filter(s => {
-      if (!q) return true;
-      return (
-        s.name.toLowerCase().includes(q) ||
-        s.location.toLowerCase().includes(q) ||
-        (s.notes && s.notes.toLowerCase().includes(q)) ||
-        cat.category.toLowerCase().includes(q)
-      );
-    });
-
-    if (matchedServices.length === 0) return;
-
-    const catEl = document.createElement("div");
-    catEl.className = "category glass";
-    catEl.innerHTML = `
-      <div class="category-header">
-        <h3>${cat.category}</h3>
-        <div class="meta">${matchedServices.length} result(s)</div>
-      </div>
-      <div class="service-list"></div>
-    `;
-
-    const listEl = catEl.querySelector(".service-list");
-    matchedServices.forEach(s => {
-      const sEl = document.createElement("div");
-      sEl.className = "service";
-      sEl.innerHTML = `
-        <div class="left">
-          <strong>${s.name}</strong>
-          <small>${s.location} • ${s.notes || ""}</small>
-        </div>
-        <div class="right">
-          <a class="call-btn" href="tel:${s.phone.replace(/\s+/g,'')}" aria-label="Call ${s.name}">${s.phone}</a>
-        </div>
-      `;
-      listEl.appendChild(sEl);
-    });
-
-    categoryContainer.appendChild(catEl);
-  });
-
-  if (!categoryContainer.hasChildNodes()) {
-    categoryContainer.innerHTML = `<div class="glass" style="padding:22px;text-align:center">No results. Try another search term.</div>`;
-  }
+// THEME SWITCHER
+function changeTheme(theme) {
+    document.body.className = "";
+    if (theme === "purple") {
+        document.body.classList.add("purple-theme");
+    }
+    localStorage.setItem("theme", theme);
 }
 
-/* =========================
-   Search handlers
-   ========================= */
-searchBox.addEventListener("input", (e) => {
-  renderCategories(e.target.value);
-});
-clearSearch.addEventListener("click", () => {
-  searchBox.value = "";
-  renderCategories("");
-});
-
-/* =========================
-   Theme + mode controls
-   ========================= */
-const themeSelector = document.getElementById("themeSelector");
-const modeBtn = document.getElementById("modeToggle");
-const body = document.body;
-
-function applyTheme(theme) {
-  // Remove theme classes
-  body.classList.remove("light-theme", "dark-theme", "purple-theme", "green-theme");
-  if (theme === "light") body.classList.add("light-theme");
-  else if (theme === "dark") body.classList.add("dark-theme");
-  else if (theme === "purple") body.classList.add("purple-theme");
-  else if (theme === "green") body.classList.add("green-theme");
-
-  localStorage.setItem("site-theme", theme);
+// Load saved theme
+if (localStorage.getItem("theme")) {
+    changeTheme(localStorage.getItem("theme"));
 }
 
-themeSelector.addEventListener("change", (e) => applyTheme(e.target.value));
 
-// Mode toggle (quick swap between light and dark)
-modeBtn.addEventListener("click", () => {
-  const current = localStorage.getItem("site-theme") || "dark";
-  if (current === "light") {
-    themeSelector.value = "dark";
-    applyTheme("dark");
-    modeBtn.textContent = "🌙";
-  } else {
-    themeSelector.value = "light";
-    applyTheme("light");
-    modeBtn.textContent = "☀️";
-  }
-});
+// ============================
+// 7 CATEGORY DATA (40+ each)
+// ============================
 
-/* Load saved theme on startup */
-(function loadSavedTheme() {
-  const saved = localStorage.getItem("site-theme") || "dark";
-  themeSelector.value = saved;
-  applyTheme(saved);
-  modeBtn.textContent = (saved === "light") ? "☀️" : "🌙";
-})();
+const plumbing = Array.from({ length: 40 }, (_, i) => ({
+    name: `Plumber Service ${i + 1}`,
+    location: `Street ${i + 3}, Area ${i + 2}`
+}));
 
-/* =========================
-   Extra UI actions
-   ========================= */
-addListing.addEventListener("click", (e) => {
-  // Example: link to a Google Form you create to collect listings
-  // Replace with your real form URL or remove.
-  e.preventDefault();
-  const formUrl = "https://forms.gle/your-google-form-here"; // <-- replace with actual form if you have one
-  window.open(formUrl, "_blank");
-});
+const electricals = Array.from({ length: 40 }, (_, i) => ({
+    name: `Electrical Shop ${i + 1}`,
+    location: `Market Road ${i + 1}`
+}));
 
-/* Year in footer */
-yearEl.textContent = new Date().getFullYear();
+const bakeries = Array.from({ length: 40 }, (_, i) => ({
+    name: `Bakery & Cakes ${i + 1}`,
+    location: `Food Street ${i + 4}`
+}));
 
-/* Initial render */
-renderCategories();
+const petrolpumps = Array.from({ length: 40 }, (_, i) => ({
+    name: `Petrol Pump ${i + 1}`,
+    location: `Highway ${i + 10}`
+}));
+
+const temples = Array.from({ length: 40 }, (_, i) => ({
+    name: `Temple ${i + 1}`,
+    location: `Temple Street ${i + 6}`
+}));
+
+const schools = Array.from({ length: 40 }, (_, i) => ({
+    name: `School ${i + 1}`,
+    location: `School Road ${i + 9}`
+}));
+
+const stationery = Array.from({ length: 40 }, (_, i) => ({
+    name: `Stationary Store ${i + 1}`,
+    location: `Lane ${i + 5}`
+}));
+
+
+// STORE ALL CATEGORY REFERENCES
+const categoryMap = {
+    plumbing,
+    electricals,
+    bakeries,
+    petrolpumps,
+    temples,
+    schools,
+    stationery
+};
+
+
+// LOAD CATEGORY INTO UI
+function loadCategory(category) {
+    const list = categoryMap[category];
+    let html = "";
+
+    list.forEach(item => {
+        html += `
+            <div class="service-card">
+                <h3>${item.name}</h3>
+                <p>${item.location}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById("serviceList").innerHTML = html;
+}
+
+
+// SEARCH FUNCTION
+function searchItems() {
+    let input = document.getElementById("searchBox").value.toLowerCase();
+    let cards = document.getElementsByClassName("service-card");
+
+    for (let card of cards) {
+        let name = card.querySelector("h3").textContent.toLowerCase();
+        card.style.display = name.includes(input) ? "block" : "none";
+    }
+}
