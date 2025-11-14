@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Services Directory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Local Services Directory</h1>
+        <input type="text" id="searchBox" placeholder="Search services (plumber, electrician...)">
+    </header>
+
+    <div id="category-list"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
